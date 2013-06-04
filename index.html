@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Readline by Distrotech</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Readline</h1>
+          <h2>git://git.savannah.gnu.org/readline.git</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/Distrotech/readline/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/Distrotech/readline/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/Distrotech/readline" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
+
+<p>This is the Gnu Readline library, version 6.2.</p>
+
+<p>The Readline library provides a set of functions for use by applications
+that allow users to edit command lines as they are typed in.  Both
+Emacs and vi editing modes are available.  The Readline library includes
+additional functions to maintain a list of previously-entered command
+lines, to recall and perhaps reedit those lines, and perform csh-like
+history expansion on previous commands.</p>
+
+<p>The history facilites are also placed into a separate library, the
+History library, as part of the build process.  The History library
+may be used without Readline in applications which desire its
+capabilities.</p>
+
+<p>The Readline library is free software, distributed under the terms of
+the [GNU] General Public License as published by the Free Software
+Foundation, version 3 of the License.  For more information, see the
+file COPYING.</p>
+
+<p>To build the library, try typing <code>./configure', then</code>make'.  The
+configuration process is automated, so no further intervention should
+be necessary.  Readline builds with <code>gcc' by default if it is
+available.  If you want to use</code>cc' instead, type</p>
+
+<pre><code>    CC=cc ./configure
+</code></pre>
+
+<p>if you are using a Bourne-style shell.  If you are not, the following
+may work:</p>
+
+<pre><code>    env CC=cc ./configure
+</code></pre>
+
+<p>Read the file INSTALL in this directory for more information about how
+to customize and control the build process.</p>
+
+<p>The file rlconf.h contains C preprocessor defines that enable and disable
+certain Readline features.</p>
+
+<p>The special make target `everything' will build the static and shared
+libraries (if the target platform supports them) and the examples.</p>
+
+<h1>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h1>
+
+<p>There are several example programs that use Readline features in the
+examples directory.  The <code>rl' program is of particular interest.  It
+is a command-line interface to Readline, suitable for use in shell
+scripts in place of</code>read'.</p>
+
+<h1>
+<a name="shared-libraries" class="anchor" href="#shared-libraries"><span class="octicon octicon-link"></span></a>Shared Libraries</h1>
+
+<p>There is skeletal support for building shared versions of the
+Readline and History libraries.  The configure script creates
+a Makefile in the <code>shlib' subdirectory, and typing</code>make shared'
+will cause shared versions of the Readline and History libraries
+to be built on supported platforms.</p>
+
+<p>If <code>configure' is given the</code>--enable-shared' option, it will attempt
+to build the shared libraries by default on supported platforms.</p>
+
+<p>Configure calls the script support/shobj-conf to test whether or
+not shared library creation is supported and to generate the values
+of variables that are substituted into shlib/Makefile.  If you
+try to build shared libraries on an unsupported platform, `make'
+will display a message asking you to update support/shobj-conf for
+your platform.</p>
+
+<p>If you need to update support/shobj-conf, you will need to create
+a <code>stanza' for your operating system and compiler.  The script uses
+the value of host_os and ${CC} as determined by configure.  For
+instance, FreeBSD 4.2 with any version of gcc is identified as
+</code>freebsd4.2-gcc*'.</p>
+
+<p>In the stanza for your operating system-compiler pair, you will need to
+define several variables.  They are:</p>
+
+<p>SHOBJ_CC    The C compiler used to compile source files into shareable
+        object files.  This is normally set to the value of ${CC}
+        by configure, and should not need to be changed.</p>
+
+<p>SHOBJ_CFLAGS    Flags to pass to the C compiler ($SHOBJ_CC) to create
+        position-independent code.  If you are using gcc, this
+        should probably be set to `-fpic'.</p>
+
+<p>SHOBJ_LD    The link editor to be used to create the shared library from
+        the object files created by $SHOBJ_CC.  If you are using
+        gcc, a value of `gcc' will probably work.</p>
+
+<p>SHOBJ_LDFLAGS   Flags to pass to SHOBJ_LD to enable shared object creation.
+        If you are using gcc, `-shared' may be all that is necessary.
+        These should be the flags needed for generic shared object
+        creation.</p>
+
+<p>SHLIB_XLDFLAGS  Additional flags to pass to SHOBJ_LD for shared library
+        creation.  Many systems use the -R option to the link
+        editor to embed a path within the library for run-time
+        library searches.  A reasonable value for such systems would
+        be `-R$(libdir)'.</p>
+
+<p>SHLIB_LIBS  Any additional libraries that shared libraries should be
+        linked against when they are created.</p>
+
+<p>SHLIB_LIBPREF   The prefix to use when generating the filename of the shared
+        library.  The default is <code>lib'; Cygwin uses</code>cyg'.</p>
+
+<p>SHLIB_LIBSUFF   The suffix to add to <code>libreadline' and</code>libhistory' when
+        generating the filename of the shared library.  Many systems
+        use <code>so'; HP-UX uses</code>sl'.</p>
+
+<p>SHLIB_LIBVERSION The string to append to the filename to indicate the version
+        of the shared library.  It should begin with $(SHLIB_LIBSUFF),
+        and possibly include version information that allows the
+        run-time loader to load the version of the shared library
+        appropriate for a particular program.  Systems using shared
+        libraries similar to SunOS 4.x use major and minor library
+        version numbers; for those systems a value of
+        <code>$(SHLIB_LIBSUFF).$(SHLIB_MAJOR)$(SHLIB_MINOR)' is appropriate.
+        Systems based on System V Release 4 don't use minor version
+        numbers; use</code>$(SHLIB_LIBSUFF).$(SHLIB_MAJOR)' on those systems.
+        Other Unix versions use different schemes.</p>
+
+<p>SHLIB_DLLVERSION The version number for shared libraries that determines API
+        compatibility between readline versions and the underlying
+        system.  Used only on Cygwin.  Defaults to $SHLIB_MAJOR, but
+        can be overridden at configuration time by defining DLLVERSION
+        in the environment.</p>
+
+<p>SHLIB_DOT   The character used to separate the name of the shared library
+        from the suffix and version information.  The default is `.';
+        systems like Cygwin which don't separate version information
+        from the library name should set this to the empty string.</p>
+
+<p>SHLIB_STATUS    Set this to `supported' when you have defined the other
+        necessary variables.  Make uses this to determine whether
+        or not shared library creation should be attempted.</p>
+
+<p>You should look at the existing stanzas in support/shobj-conf for ideas.</p>
+
+<p>Once you have updated support/shobj-conf, re-run configure and type
+`make shared'.  The shared libraries will be created in the shlib
+subdirectory.</p>
+
+<p>If shared libraries are created, <code>make install' will install them. 
+You may install only the shared libraries by running</code>make
+install-shared' from the top-level build directory.  Running <code>make
+install' in the shlib subdirectory will also work.  If you don't want
+to install any created shared libraries, run</code>make install-static'. </p>
+
+<h1>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h1>
+
+<p>The documentation for the Readline and History libraries appears in
+the <code>doc' subdirectory.  There are three texinfo files and a
+Unix-style manual page describing the facilities available in the
+Readline library.  The texinfo files include both user and
+programmer's manuals.  HTML versions of the manuals appear in the
+</code>doc' subdirectory as well. </p>
+
+<h1>
+<a name="reporting-bugs" class="anchor" href="#reporting-bugs"><span class="octicon octicon-link"></span></a>Reporting Bugs</h1>
+
+<p>Bug reports for Readline should be sent to:</p>
+
+<pre><code>    bug-readline@gnu.org
+</code></pre>
+
+<p>When reporting a bug, please include the following information:</p>
+
+<pre><code>    * the version number and release status of Readline (e.g., 4.2-release)
+    * the machine and OS that it is running on
+    * a list of the compilation flags or the contents of `config.h', if
+      appropriate
+    * a description of the bug
+    * a recipe for recreating the bug reliably
+    * a fix for the bug if you have one!
+</code></pre>
+
+<p>If you would like to contact the Readline maintainer directly, send mail
+to <a href="mailto:bash-maintainers@gnu.org">bash-maintainers@gnu.org</a>.</p>
+
+<p>Since Readline is developed along with bash, the <a href="mailto:bug-bash@gnu.org">bug-bash@gnu.org</a> mailing
+list (mirrored to the Usenet newsgroup gnu.bash.bug) often contains
+Readline bug reports and fixes. </p>
+
+<p>Chet Ramey
+<a href="mailto:chet.ramey@case.edu">chet.ramey@case.edu</a></p>
+        </section>
+
+        <footer>
+          Readline is maintained by <a href="https://github.com/Distrotech">Distrotech</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
