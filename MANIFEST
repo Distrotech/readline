@@ -20,6 +20,7 @@ config.h.in	f
 configure	f
 configure.ac	f
 Makefile.in	f
+readline.pc.in	f
 ansi_stdlib.h	f
 chardefs.h	f
 colors.h	f
@@ -114,6 +115,7 @@ examples/fileman.c	f
 examples/manexamp.c	f
 examples/readlinebuf.h	f
 examples/rl-fgets.c	f
+examples/rlbasic.c	f
 examples/rlcat.c	f
 examples/rlevent.c	f
 examples/rltest.c	f

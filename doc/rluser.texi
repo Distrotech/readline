@@ -423,9 +423,23 @@ the terminal's bell.
 
 @item bind-tty-special-chars
 @vindex bind-tty-special-chars
-If set to @samp{on}, Readline attempts to bind the control characters  
-treated specially by the kernel's terminal driver to their Readline
-equivalents.
+If set to @samp{on} (the default), Readline attempts to bind the control
+characters   treated specially by the kernel's terminal driver to their
+Readline equivalents.
+
+@item blink-matching-paren
+@vindex blink-matching-paren
+If set to @samp{on}, Readline attempts to briefly move the cursor to an
+opening parenthesis when a closing parenthesis is inserted.  The default
+is @samp{off}.
+
+@item colored-completion-prefix
+@vindex colored-completion-prefix
+If set to @samp{on}, when listing completions, Readline displays the
+common prefix of the set of possible completions using a different color.
+The color definitions are taken from the value of the @env{LS_COLORS}
+environment variable.
+The default is @samp{off}.
 
 @item colored-stats
 @vindex colored-stats
@@ -500,10 +514,30 @@ key bindings is used.  By default, Readline starts up in Emacs editing
 mode, where the keystrokes are most similar to Emacs.  This variable can be
 set to either @samp{emacs} or @samp{vi}.
 
+@item emacs-mode-string
+@vindex emacs-mode-string
+This string is displayed immediately before the last line of the primary
+prompt when emacs editing mode is active.  The value is expanded like a
+key binding, so the standard set of meta- and control prefixes and
+backslash escape sequences is available.
+Use the @samp{\1} and @samp{\2} escapes to begin and end sequences of
+non-printing characters, which can be used to embed a terminal control
+sequence into the mode string.
+The default is @samp{@@}.
+
 @item echo-control-characters
+@vindex echo-control-characters
 When set to @samp{on}, on operating systems that indicate they support it,
 readline echoes a character corresponding to a signal generated from the
 keyboard.  The default is @samp{on}.
+
+@item enable-bracketed-paste
+@vindex enable-bracketed-paste
+When set to @samp{On}, Readline will configure the terminal in a way
+that will enable it to insert each paste into the editing buffer as a
+single string of characters, instead of treating each character as if
+it had been read from the keyboard.  This can prevent pasted characters
+from being interpreted as editing commands.  The default is @samp{off}.
 
 @item enable-keypad
 @vindex enable-keypad
@@ -673,8 +707,8 @@ The default value is @samp{off}.
 @item show-mode-in-prompt
 @vindex show-mode-in-prompt
 If set to @samp{on}, add a character to the beginning of the prompt
-indicating the editing mode: emacs (@samp{@@}), vi command (@samp{:}),
-or vi insertion (@samp{+}).
+indicating the editing mode: emacs, vi command, or vi insertion.
+The mode strings are user-settable.
 The default value is @samp{off}.
 
 @item skip-completed-text
@@ -690,6 +724,30 @@ is after the @samp{e} in @samp{Makefile} will result in @samp{Makefile}
 rather than @samp{Makefilefile}, assuming there is a single possible
 completion.
 The default value is @samp{off}.
+
+@item vi-cmd-mode-string
+@vindex vi-cmd-mode-string
+This string is displayed immediately before the last line of the primary
+prompt when vi editing mode is active and in command mode.
+The value is expanded like a
+key binding, so the standard set of meta- and control prefixes and
+backslash escape sequences is available.
+Use the @samp{\1} and @samp{\2} escapes to begin and end sequences of
+non-printing characters, which can be used to embed a terminal control
+sequence into the mode string.
+The default is @samp{(cmd)}.
+
+@item vi-ins-mode-string
+@vindex vi-ins-mode-string
+This string is displayed immediately before the last line of the primary
+prompt when vi editing mode is active and in insertion mode.
+The value is expanded like a
+key binding, so the standard set of meta- and control prefixes and
+backslash escape sequences is available.
+Use the @samp{\1} and @samp{\2} escapes to begin and end sequences of
+non-printing characters, which can be used to embed a terminal control
+sequence into the mode string.
+The default is @samp{(ins)}.
 
 @item visible-stats
 @vindex visible-stats
@@ -1122,17 +1180,19 @@ the history as necessary.  This is an incremental search.
 
 @item forward-search-history (C-s)
 Search forward starting at the current line and moving `down' through
-the the history as necessary.  This is an incremental search.
+the history as necessary.  This is an incremental search.
 
 @item non-incremental-reverse-search-history (M-p)
 Search backward starting at the current line and moving `up'
 through the history as necessary using a non-incremental search
 for a string supplied by the user.
+The search string may match anywhere in a history line.
 
 @item non-incremental-forward-search-history (M-n)
 Search forward starting at the current line and moving `down'
-through the the history as necessary using a non-incremental search
+through the history as necessary using a non-incremental search
 for a string supplied by the user.
+The search string may match anywhere in a history line.
 
 @item history-search-forward ()
 Search forward through the history for the string of characters
@@ -1224,6 +1284,14 @@ Insert a tab character.
 @item self-insert (a, b, A, 1, !, @dots{})
 Insert yourself.
 
+@item bracketed-paste-begin ()
+This function is intended to be bound to the "bracketed paste" escape
+sequence sent by some terminals, and such a binding is assigned by default.
+It allows Readline to insert the pasted text as a single unit without treating
+each character as if it had been read from the keyboard.  The characters
+are inserted as if each one was bound to @code{self-insert}) instead of
+executing any editing commands.
+
 @item transpose-chars (C-t)
 Drag the character before the cursor forward over
 the character at the cursor, moving the
@@ -1275,7 +1343,7 @@ By default, this command is unbound.
 Kill the text from point to the end of the line.
 
 @item backward-kill-line (C-x Rubout)
-Kill backward to the beginning of the line.
+Kill backward from the cursor to the beginning of the current line.
 
 @item unix-line-discard (C-u)
 Kill backward from the cursor to the beginning of the current line.
@@ -1357,7 +1425,7 @@ leading minus sign, those digits define the argument.
 If the command is followed by digits, executing @code{universal-argument}
 again ends the numeric argument, but is otherwise ignored.
 As a special case, if this command is immediately followed by a
-character that is neither a digit or minus sign, the argument count
+character that is neither a digit nor minus sign, the argument count
 for the next command is multiplied by four.
 The argument count is initially one, so executing this function the
 first time makes the argument count four, a second time makes the
@@ -1788,6 +1856,10 @@ is removed before attempting a match.
 Any completion that matches the pattern will be removed from the list.
 A leading @samp{!} negates the pattern; in this case any completion
 not matching the pattern will be removed.
+If the @code{nocasematch} shell option
+(see the description of @code{shopt} in @ref{The Shopt Builtin})
+is enabled, the match is performed without regard to the case
+of alphabetic characters.
 
 Finally, any prefix and suffix specified with the @option{-P} and @option{-S}
 options are added to each member of the completion list, and the result is
@@ -1940,6 +2012,9 @@ with @option{-F}.
 @item noquote
 Tell Readline not to quote the completed words if they are filenames
 (quoting filenames is the default).
+
+@item nosort
+Tell Readline not to sort the list of possible completions alphabetically.
 
 @item nospace
 Tell Readline not to append a space (the default) to words completed at

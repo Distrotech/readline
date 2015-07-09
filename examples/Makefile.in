@@ -53,7 +53,7 @@ CPPFLAGS = @CPPFLAGS@
 
 INCLUDES = -I$(srcdir) -I$(top_srcdir) -I..
 
-CCFLAGS  = $(DEFS) $(LOCAL_CFLAGS) $(CPPFLAGS) $(INCLUDES) $(CFLAGS)
+CCFLAGS  = $(DEFS) $(LOCAL_CFLAGS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS)
 LDFLAGS = -g -L.. @LDFLAGS@
 
 PURIFY = @PURIFY@
@@ -68,16 +68,16 @@ TERMCAP_LIB = @TERMCAP_LIB@
 	$(CC) $(CCFLAGS) -c $<
 
 SOURCES = excallback.c fileman.c histexamp.c manexamp.c rl-fgets.c rl.c \
-		rlcat.c rlevent.c rlptytest.c rltest.c rlversion.c \
+		rlbasic.c rlcat.c rlevent.c rlptytest.c rltest.c rlversion.c \
 		rl-callbacktest.c hist_erasedups.c hist_purgecmd.c 
 
 EXECUTABLES = fileman$(EXEEXT) rltest$(EXEEXT) rl$(EXEEXT) rlcat$(EXEEXT) \
 		rlevent$(EXEEXT) rlversion$(EXEEXT) histexamp$(EXEEXT) \
-		rl-callbacktest$(EXEEXT) \
+		rl-callbacktest$(EXEEXT) rlbasic$(EXEEXT) \
 		hist_erasedups$(EXEEXT) hist_purgecmd$(EXEEXT)
 
 OBJECTS = fileman.o rltest.o rl.o rlevent.o rlcat.o rlversion.o histexamp.o \
-	  rl-callbacktest.o hist_erasedups.o hist_purgecmd.o
+	  rl-callbacktest.o rlbasic.o hist_erasedups.o hist_purgecmd.o
 
 OTHEREXE = rlptytest$(EXEEXT)
 OTHEROBJ = rlptytest.o
@@ -105,6 +105,9 @@ uninstall:
 
 rl$(EXEEXT): rl.o $(READLINE_LIB)
 	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rl.o $(READLINE_LIB) $(TERMCAP_LIB)
+
+rlbasic$(EXEEXT): rlbasic.o $(READLINE_LIB)
+	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rlbasic.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 rlcat$(EXEEXT): rlcat.o $(READLINE_LIB)
 	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rlcat.o $(READLINE_LIB) $(TERMCAP_LIB)
@@ -150,6 +153,7 @@ rlversion.o: rlversion.c
 histexamp.o: histexamp.c
 hist_erasedups.o: hist_erasedups.c
 hist_purgecmd.o: hist_purgecmd.c
+rlbasic.o: rlbasic.c
 rlcat.o: rlcat.c
 rlptytest.o: rlptytest.c
 rl-callbacktest.o: rl-callbacktest.c
@@ -161,6 +165,7 @@ rlversion.o: $(top_srcdir)/readline.h
 histexamp.o: $(top_srcdir)/history.h
 hist_erasedups.o: $(top_srcdir)/history.h
 hist_purgecmd.o: $(top_srcdir)/history.h
+rlbasic.o: $(top_srcdir)/readline.h $(top_srcdir)/history.h
 rlcat.o: $(top_srcdir)/readline.h $(top_srcdir)/history.h
 rlptytest.o: $(top_srcdir)/readline.h $(top_srcdir)/history.h
 rl-callbacktest.o: $(top_srcdir)/readline.h $(top_srcdir)/history.h

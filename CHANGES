@@ -1,3 +1,95 @@
+This document details the changes between this version, readline-7.0, and the
+previous version, readline-6.3.
+
+1.  Changes to Readline
+
+a.  A bug that caused vi-mode `.' to be unable to redo `c', `d', and `y'
+    commands with modifiers was fixed.
+
+b.  Fixed a bug that caused callback mode to dump core when reading a
+    multiple-key sequence (e.g., arrow keys).
+
+c.  Fixed a bug that caused the redisplay code to erase some of the line when
+    using horizontal scrolling with incremental search.
+
+d.  Readline's input handler now performs signal processing if read(2) is
+    interrupted by SIGALRM or SIGVTALRM.
+
+e.  Fixed a problem with revert-all-at-newline freeing freed memory.
+
+f.  Clarified the documentation for the history_quotes_inhibit_expansion
+    variable to note that it inhibits scanning for the history comment
+    character and that it only affects double-quoted strings.
+
+g.  Fixed an off-by-one error in the prompt printed when performing searches.
+
+h.  Use pselect(2), if available, to wait for input before calling read(2), so
+    a SIGWINCH can interrupt it, since it doesn't interrupt read(2).
+
+i.  Some memory leaks caused by signals interrupting filename completion have
+    been fixed.
+
+j.  Reading EOF twice on a non-empty line causes EOF to be returned, rather
+    than the partial line.  This can cause partial lines to be executed on
+    SIGHUP, for example.
+
+k.  Fixed a bug concerning deleting multibyte characters from the search
+    string while performing an incremental search.
+
+l.  Fixed a bug with tilde expanding directory names in filename completion.
+
+m.  Fixed a bug that did not allow binding sequences beginning with a `\'.
+
+n.  Fixed a redisplay bug involving incorrect line wrapping when the prompt
+    contains a multibyte character in the last screen column.
+
+o.  Fixed a bug that caused history expansion to disregard characters that are
+    documented to delimit a history event specifier without requiring `:'.
+
+p.  Fixed a bug that could cause reading past the end of a string when reading
+    the value when binding the set of isearch terminators.
+
+q.  Fixed a bug that caused readline commands that depend on knowing which  
+    key invoked them to misbehave when dispatching key sequences that are
+    prefixes of other key bindings. 
+
+r.  Paren matching now works in vi insert mode.
+
+2.  New Features in Readline
+
+a.  The history truncation code now uses the same error recovery mechansim as
+    the history writing code, and restores the old version of the history file
+    on error.  The error recovery mechanism handles symlinked history files.
+
+b.  There is a new bindable variable, `enable-bracketed-paste', which enables
+    support for a terminal's bracketed paste mode.
+
+c.  The editing mode indicators can now be strings and are user-settable
+    (new `emacs-mode-string', `vi-cmd-mode-string' and `vi-ins-mode-string'
+    variables).  Mode strings can contain invisible character sequences.
+    Setting mode strings to null strings restores the defaults.
+
+d.  Prompt expansion adds the mode string to the last line of a multi-line
+    prompt (one with embedded newlines).
+
+e.  There is a new bindable variable, `colored-completion-prefix', which, if
+    set, causes the common prefix of a set of possible completions to be
+    displayed in color.
+
+f.  There is a new bindable command `vi-yank-pop', a vi-mode version of emacs-
+    mode yank-pop.
+
+g.  The redisplay code underwent several efficiency improvements for multibyte
+    locales.
+
+h.  The insert-char function attempts to batch-insert all pending typeahead
+    that maps to self-insert, as long as it is coming from the terminal.
+
+i.  rl_callback_sigcleanup: a new application function that can clean up and
+    unset any state set by readline's callback mode.  Intended to be used
+    after a signal.
+
+-------------------------------------------------------------------------------
 This document details the changes between this version, readline-6.3, and the
 previous version, readline-6.2.
 

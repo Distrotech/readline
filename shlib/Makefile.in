@@ -107,7 +107,7 @@ SHLIB_MINOR=		.@SHLIB_MINOR@
 # For libraries which include headers from other libraries.
 INCLUDES = -I. -I.. -I$(topdir)
 
-CCFLAGS = $(DEFS) $(LOCAL_DEFS) $(CPPFLAGS) $(INCLUDES) $(LOCAL_CFLAGS) $(CFLAGS)
+CCFLAGS = $(DEFS) $(LOCAL_DEFS) $(INCLUDES) $(CPPFLAGS) $(LOCAL_CFLAGS) $(CFLAGS)
 
 .SUFFIXES:	.so
 
@@ -229,7 +229,8 @@ bind.so: $(topdir)/rldefs.h ${BUILD_DIR}/config.h $(topdir)/rlconf.h
 bind.so: $(topdir)/readline.h $(topdir)/keymaps.h $(topdir)/chardefs.h
 bind.so: $(topdir)/rltypedefs.h
 bind.so: $(topdir)/tilde.h $(topdir)/history.h
-compat.so: $(topdir)/rlstdc.h
+compat.so: ${BUILD_DIR}/config.h
+compat.so: $(topdir)/rlstdc.h $(topdir)/rltypedefs.h
 callback.so: $(topdir)/rlconf.h
 callback.so: $(topdir)/rldefs.h ${BUILD_DIR}/config.h
 callback.so: $(topdir)/readline.h $(topdir)/keymaps.h $(topdir)/chardefs.h
@@ -303,6 +304,7 @@ rltty.so: $(topdir)/rldefs.h ${BUILD_DIR}/config.h $(topdir)/rlconf.h
 rltty.so: $(topdir)/rltty.h $(topdir)/tilde.h
 rltty.so: $(topdir)/readline.h $(topdir)/keymaps.h $(topdir)/chardefs.h
 rltty.so: $(topdir)/rltypedefs.h
+savestring.so: ${BUILD_DIR}/config.h
 search.so: $(topdir)/rldefs.h ${BUILD_DIR}/config.h $(topdir)/rlconf.h
 search.so: $(topdir)/readline.h $(topdir)/keymaps.h $(topdir)/chardefs.h
 search.so: $(topdir)/ansi_stdlib.h $(topdir)/history.h $(topdir)/tilde.h
@@ -377,7 +379,7 @@ terminal.so: $(topdir)/rlprivate.h
 text.so: $(topdir)/rlprivate.h
 undo.so: $(topdir)/rlprivate.h
 util.so: $(topdir)/rlprivate.h
-vi_mode.so: $(topdir)/
+vi_mode.so: $(topdir)/rlprivate.h
 colors.so: $(topdir)/rlprivate.h
 parse-colors.so: $(topdir)/rlprivate.h
 

@@ -95,6 +95,22 @@ static int ibuffer_space PARAMS((void));
 static int rl_get_char PARAMS((int *));
 static int rl_gather_tyi PARAMS((void));
 
+/* Windows isatty returns true for every character device, including the null
+   device, so we need to perform additional checks. */
+#if defined (_WIN32) && !defined (__CYGWIN__)
+#include <io.h>
+#define WIN32_LEAN_AND_MEAN 1
+#include <windows.h>
+
+int
+win32_isatty (int fd)
+{
+  return (_isatty (fd) ? ((((long) (HANDLE) _get_osfhandle (fd)) & 3) == 3) : 0);
+}
+
+#define isatty(x)	win32_isatty(x)
+#endif
+
 /* **************************************************************** */
 /*								    */
 /*			Character Input Buffering       	    */
@@ -185,6 +201,7 @@ rl_gather_tyi ()
 #endif
 
   chars_avail = 0;
+  input = 0;
   tty = fileno (rl_instream);
 
 #if defined (HAVE_SELECT)
@@ -204,6 +221,8 @@ rl_gather_tyi ()
   result = ioctl (tty, FIONREAD, &chars_avail);
   if (result == -1 && errno == EIO)
     return -1;
+  if (result == -1)
+    chars_avail = 0;
 #endif
 
 #if defined (O_NDELAY)
@@ -474,6 +493,10 @@ rl_getc (stream)
 {
   int result;
   unsigned char c;
+#if defined (HAVE_PSELECT)
+  sigset_t empty_set;
+  fd_set readfds;
+#endif
 
   while (1)
     {
@@ -483,9 +506,17 @@ rl_getc (stream)
 
 #if defined (__MINGW32__)
       if (isatty (fileno (stream)))
-	return (getch ());
+	return (_getch ());	/* "There is no error return." */
 #endif
-      result = read (fileno (stream), &c, sizeof (unsigned char));
+      result = 0;
+#if defined (HAVE_PSELECT)
+      sigemptyset (&empty_set);
+      FD_ZERO (&readfds);
+      FD_SET (fileno (stream), &readfds);
+      result = pselect (fileno (stream) + 1, &readfds, NULL, NULL, NULL, &empty_set);
+#endif
+      if (result >= 0)
+	result = read (fileno (stream), &c, sizeof (unsigned char));
 
       if (result == sizeof (unsigned char))
 	return (c);
@@ -524,20 +555,24 @@ rl_getc (stream)
 
 /* fprintf(stderr, "rl_getc: result = %d errno = %d\n", result, errno); */
 
+handle_error:
       /* If the error that we received was EINTR, then try again,
 	 this is simply an interrupted system call to read ().  We allow
-	 the read to be interrupted if we caught SIGHUP or SIGTERM (but
-	 not SIGINT; let the signal handler deal with that), but if the
+	 the read to be interrupted if we caught SIGHUP, SIGTERM, or any
+	 of the other signals readline treats specially. If the
 	 application sets an event hook, call it for other signals.
 	 Otherwise (not EINTR), some error occurred, also signifying EOF. */
       if (errno != EINTR)
 	return (RL_ISSTATE (RL_STATE_READCMD) ? READERR : EOF);
+      /* fatal signals of interest */
       else if (_rl_caught_signal == SIGHUP || _rl_caught_signal == SIGTERM)
 	return (RL_ISSTATE (RL_STATE_READCMD) ? READERR : EOF);
       /* keyboard-generated signals of interest */
       else if (_rl_caught_signal == SIGINT || _rl_caught_signal == SIGQUIT)
         RL_CHECK_SIGNALS ();
       /* non-keyboard-generated signals of interest */
+      else if (_rl_caught_signal == SIGWINCH)
+	RL_CHECK_SIGNALS ();
       else if (_rl_caught_signal == SIGALRM
 #if defined (SIGVTALRM)
 		|| _rl_caught_signal == SIGVTALRM

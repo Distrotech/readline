@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/select.h>
 
+#include <errno.h>
 #include <stdio.h>
 
 /* Standard readline include files. */
@@ -17,6 +18,8 @@
 #  include <readline/readline.h>
 #  include <readline/history.h>
 #endif
+
+extern int errno;
 
 static void cb_linehandler (char *);
 
@@ -71,7 +74,7 @@ main (int c, char **v)
       FD_SET (fileno (rl_instream), &fds);    
 
       r = select (FD_SETSIZE, &fds, NULL, NULL, NULL);
-      if (r < 0)
+      if (r < 0 && errno != EINTR)
 	{
 	  perror ("rltest: select");
 	  rl_callback_handler_remove ();

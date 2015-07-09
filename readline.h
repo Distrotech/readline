@@ -39,9 +39,9 @@ extern "C" {
 #endif
 
 /* Hex-encoded Readline version number. */
-#define RL_READLINE_VERSION	0x0603		/* Readline 6.3 */
-#define RL_VERSION_MAJOR	6
-#define RL_VERSION_MINOR	3
+#define RL_READLINE_VERSION	0x0700		/* Readline 7.0 */
+#define RL_VERSION_MAJOR	7
+#define RL_VERSION_MINOR	0
 
 /* Readline data structures. */
 
@@ -172,8 +172,9 @@ extern int rl_yank PARAMS((int, int));
 extern int rl_yank_pop PARAMS((int, int));
 extern int rl_yank_nth_arg PARAMS((int, int));
 extern int rl_yank_last_arg PARAMS((int, int));
-/* Not available unless __CYGWIN__ is defined. */
-#ifdef __CYGWIN__
+extern int rl_bracketed_paste_begin PARAMS((int, int));
+/* Not available unless _WIN32 is defined. */
+#if defined (_WIN32)
 extern int rl_paste_from_clipboard PARAMS((int, int));
 #endif
 
@@ -219,6 +220,7 @@ extern int rl_insert_close PARAMS((int, int));
 extern void rl_callback_handler_install PARAMS((const char *, rl_vcpfunc_t *));
 extern void rl_callback_read_char PARAMS((void));
 extern void rl_callback_handler_remove PARAMS((void));
+extern void rl_callback_sigcleanup PARAMS((void));
 
 /* Things for vi mode. Not available unless readline is compiled -DVI_MODE. */
 /* VI-mode bindable commands. */
@@ -247,6 +249,7 @@ extern int rl_vi_column PARAMS((int, int));
 extern int rl_vi_delete_to PARAMS((int, int));
 extern int rl_vi_change_to PARAMS((int, int));
 extern int rl_vi_yank_to PARAMS((int, int));
+extern int rl_vi_yank_pop PARAMS((int, int));
 extern int rl_vi_rubout PARAMS((int, int));
 extern int rl_vi_delete PARAMS((int, int));
 extern int rl_vi_back_to_indent PARAMS((int, int));
@@ -389,6 +392,7 @@ extern int rl_show_char PARAMS((int));
 
 /* Undocumented in texinfo manual. */
 extern int rl_character_len PARAMS((int, int));
+extern void rl_redraw_prompt_last_line PARAMS((void));
 
 /* Save and restore internal prompt redisplay information. */
 extern void rl_save_prompt PARAMS((void));
@@ -893,6 +897,7 @@ struct readline_state {
   rl_command_func_t *lastfunc;
   int insmode;
   int edmode;
+  char *kseq;
   int kseqlen;
   FILE *inf;
   FILE *outf;
@@ -906,9 +911,16 @@ struct readline_state {
   /* search state */
 
   /* completion state */
+  rl_compentry_func_t *entryfunc;
+  rl_compentry_func_t *menuentryfunc;
+  rl_compignore_func_t *ignorefunc;
+  rl_completion_func_t *attemptfunc;
+  char *wordbreakchars;
 
   /* options state */
 
+  /* hook state */
+  
   /* reserved for future expansion, so the struct size doesn't change */
   char reserved[64];
 };

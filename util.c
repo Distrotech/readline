@@ -55,6 +55,7 @@
 
 #include "rlprivate.h"
 #include "xmalloc.h"
+#include "rlshell.h"
 
 /* **************************************************************** */
 /*								    */
@@ -107,12 +108,11 @@ _rl_abort_internal ()
   while (rl_executing_macro)
     _rl_pop_executing_macro ();
 
+  RL_UNSETSTATE (RL_STATE_MULTIKEY);	/* XXX */
+
   rl_last_func = (rl_command_func_t *)NULL;
-#if defined (HAVE_POSIX_SIGSETJMP)
-  siglongjmp (_rl_top_level, 1);
-#else
-  longjmp (_rl_top_level, 1);
-#endif
+
+  _rl_longjmp (_rl_top_level, 1);
   return (0);
 }
 
@@ -512,11 +512,18 @@ _rl_trace (va_alist)
 int
 _rl_tropen ()
 {
-  char fnbuf[128];
+  char fnbuf[128], *x;
 
   if (_rl_tracefp)
     fclose (_rl_tracefp);
-  sprintf (fnbuf, "/var/tmp/rltrace.%ld", (long)getpid());
+#if defined (_WIN32) && !defined (__CYGWIN__)
+  x = sh_get_env_value ("TEMP");
+  if (x == 0)
+    x = ".";
+#else
+  x = "/var/tmp";
+#endif
+  sprintf (fnbuf, "%s/rltrace.%ld", x, (long)getpid());
   unlink(fnbuf);
   _rl_tracefp = fopen (fnbuf, "w+");
   return _rl_tracefp != 0;

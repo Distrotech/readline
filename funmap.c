@@ -68,6 +68,7 @@ static const FUNMAP default_funmap[] = {
   { "backward-word", rl_backward_word },
   { "beginning-of-history", rl_beginning_of_history },
   { "beginning-of-line", rl_beg_of_line },
+  { "bracketed-paste-begin", rl_bracketed_paste_begin },
   { "call-last-kbd-macro", rl_call_last_kbd_macro },
   { "capitalize-word", rl_capitalize_word },
   { "character-search", rl_char_search },
@@ -115,7 +116,7 @@ static const FUNMAP default_funmap[] = {
   { "non-incremental-reverse-search-history-again", rl_noninc_reverse_search_again },
   { "old-menu-complete", rl_old_menu_complete },
   { "overwrite-mode", rl_overwrite_mode },
-#ifdef __CYGWIN__
+#if defined (_WIN32)
   { "paste-from-clipboard", rl_paste_from_clipboard },
 #endif
   { "possible-completions", rl_possible_completions },
@@ -177,7 +178,7 @@ static const FUNMAP default_funmap[] = {
   { "vi-fword", rl_vi_fword },
   { "vi-goto-mark", rl_vi_goto_mark },
   { "vi-insert-beg", rl_vi_insert_beg },
-  { "vi-insertion-mode", rl_vi_insertion_mode },
+  { "vi-insertion-mode", rl_vi_insert_mode },
   { "vi-match", rl_vi_match },
   { "vi-movement-mode", rl_vi_movement_mode },
   { "vi-next-word", rl_vi_next_word },
@@ -194,6 +195,7 @@ static const FUNMAP default_funmap[] = {
   { "vi-subst", rl_vi_subst },
   { "vi-tilde-expand", rl_vi_tilde_expand },
   { "vi-yank-arg", rl_vi_yank_arg },
+  { "vi-yank-pop", rl_vi_yank_pop },
   { "vi-yank-to", rl_vi_yank_to },
 #endif /* VI_MODE */
 

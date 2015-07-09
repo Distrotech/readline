@@ -1,10 +1,10 @@
 @ignore
-Copyright (C) 1988-2014 Free Software Foundation, Inc. 
+Copyright (C) 1988-2015 Free Software Foundation, Inc. 
 @end ignore
 
-@set EDITION 6.3
-@set VERSION 6.3
-@set UPDATED 6 January 2014
-@set UPDATED-MONTH January 2014
+@set EDITION 6.4
+@set VERSION 6.4
+@set UPDATED 28 May 2015
+@set UPDATED-MONTH May 2015
 
-@set LASTCHANGE Mon Jan  6 16:26:51 EST 2014
+@set LASTCHANGE Thu May 28 16:58:07 EDT 2015

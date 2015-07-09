@@ -66,7 +66,6 @@ static int rl_search_history PARAMS((int, int));
 
 static _rl_search_cxt *_rl_isearch_init PARAMS((int));
 static void _rl_isearch_fini PARAMS((_rl_search_cxt *));
-static int _rl_isearch_cleanup PARAMS((_rl_search_cxt *, int));
 
 /* Last line found by the current incremental search, so we don't `find'
    identical lines many times in a row.  Now part of isearch context. */
@@ -553,8 +552,16 @@ add_character:
 	 do until we have a real isearch-undo. */
       if (cxt->search_string_index == 0)
 	rl_ding ();
-      else
+      else if (MB_CUR_MAX == 1 || rl_byte_oriented)
 	cxt->search_string[--cxt->search_string_index] = '\0';
+      else
+	{
+	  wstart = _rl_find_prev_mbchar (cxt->search_string, cxt->search_string_index, MB_FIND_NONZERO);
+	  if (wstart >= 0)
+	    cxt->search_string[cxt->search_string_index = wstart] = '\0';
+	  else
+	    rl_ding ();
+	}
       break;
 
     case -4:	/* C-G, abort */
@@ -716,7 +723,7 @@ add_character:
   return 1;
 }
 
-static int
+int
 _rl_isearch_cleanup (cxt, r)
      _rl_search_cxt *cxt;
      int r;
