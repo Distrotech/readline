@@ -125,10 +125,11 @@ typedef struct __rl_keyseq_context
   int flags;
   int subseq_arg;
   int subseq_retval;		/* XXX */
-  Keymap dmap;
-
-  Keymap oldmap;
   int okey;
+
+  Keymap dmap;
+  Keymap oldmap;
+
   struct __rl_keyseq_context *ocxt;
   int childval;
 } _rl_keyseq_cxt;
@@ -427,6 +428,7 @@ extern int _rl_vi_textmod_command PARAMS((int));
 extern int _rl_vi_motion_command PARAMS((int));
 extern void _rl_vi_done_inserting PARAMS((void));
 extern int _rl_vi_domove_callback PARAMS((_rl_vimotion_cxt *));
+extern int _rl_vi_domove_motion_cleanup PARAMS((int, _rl_vimotion_cxt *));
 
 /*************************************************************************
  * Undocumented private variables					 *
