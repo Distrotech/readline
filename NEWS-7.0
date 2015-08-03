@@ -1,0 +1,36 @@
+This is a terse description of the new features added to readline-7.0 since
+the release of readline-6.3.
+
+New Features in Readline
+
+a.  The history truncation code now uses the same error recovery mechansim as
+    the history writing code, and restores the old version of the history file
+    on error.  The error recovery mechanism handles symlinked history files.
+
+b.  There is a new bindable variable, `enable-bracketed-paste', which enables
+    support for a terminal's bracketed paste mode.
+
+c.  The editing mode indicators can now be strings and are user-settable
+    (new `emacs-mode-string', `vi-cmd-mode-string' and `vi-ins-mode-string'
+    variables).  Mode strings can contain invisible character sequences.
+    Setting mode strings to null strings restores the defaults.
+
+d.  Prompt expansion adds the mode string to the last line of a multi-line
+    prompt (one with embedded newlines).
+
+e.  There is a new bindable variable, `colored-completion-prefix', which, if
+    set, causes the common prefix of a set of possible completions to be
+    displayed in color.
+
+f.  There is a new bindable command `vi-yank-pop', a vi-mode version of emacs-
+    mode yank-pop.
+
+g.  The redisplay code underwent several efficiency improvements for multibyte
+    locales.
+
+h.  The insert-char function attempts to batch-insert all pending typeahead
+    that maps to self-insert, as long as it is coming from the terminal.
+
+i.  rl_callback_sigcleanup: a new application function that can clean up and
+    unset any state set by readline's callback mode.  Intended to be used
+    after a signal.
