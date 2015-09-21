@@ -56,8 +56,6 @@ INCLUDES = -I$(srcdir) -I$(top_srcdir) -I..
 CCFLAGS  = $(DEFS) $(LOCAL_CFLAGS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS)
 LDFLAGS = -g -L.. @LDFLAGS@
 
-PURIFY = @PURIFY@
-
 READLINE_LIB = ../libreadline.a
 HISTORY_LIB = ../libhistory.a
 
@@ -104,40 +102,40 @@ uninstall:
 	-rmdir $(DESTDIR)$(installdir)
 
 rl$(EXEEXT): rl.o $(READLINE_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rl.o $(READLINE_LIB) $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ rl.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 rlbasic$(EXEEXT): rlbasic.o $(READLINE_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rlbasic.o $(READLINE_LIB) $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ rlbasic.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 rlcat$(EXEEXT): rlcat.o $(READLINE_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rlcat.o $(READLINE_LIB) $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ rlcat.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 rlevent$(EXEEXT): rlevent.o $(READLINE_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rlevent.o $(READLINE_LIB) $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ rlevent.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 fileman$(EXEEXT): fileman.o $(READLINE_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ fileman.o $(READLINE_LIB) $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ fileman.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 rltest$(EXEEXT): rltest.o $(READLINE_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rltest.o $(READLINE_LIB) $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ rltest.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 rl-callbacktest$(EXEEXT): rl-callbacktest.o $(READLINE_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rl-callbacktest.o $(READLINE_LIB) $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ rl-callbacktest.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 rlptytest$(EXEEXT): rlptytest.o $(READLINE_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ rlptytest.o $(READLINE_LIB) $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ rlptytest.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 rlversion$(EXEEXT): rlversion.o $(READLINE_LIB)
 	$(CC) $(LDFLAGS) -o $@ rlversion.o $(READLINE_LIB) $(TERMCAP_LIB)
 
 histexamp$(EXEEXT): histexamp.o $(HISTORY_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ histexamp.o -lhistory $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ histexamp.o -lhistory $(TERMCAP_LIB)
 
 hist_erasedups$(EXEEXT): hist_erasedups.o $(HISTORY_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ hist_erasedups.o -lhistory $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ hist_erasedups.o -lhistory $(TERMCAP_LIB)
 
 hist_purgecmd$(EXEEXT): hist_purgecmd.o $(HISTORY_LIB)
-	$(PURIFY) $(CC) $(LDFLAGS) -o $@ hist_purgecmd.o -lhistory $(TERMCAP_LIB)
+	$(CC) $(LDFLAGS) -o $@ hist_purgecmd.o -lhistory $(TERMCAP_LIB)
 
 clean mostlyclean:
 	$(RM) $(OBJECTS) $(OTHEROBJ)

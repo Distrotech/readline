@@ -45,8 +45,6 @@ RM = rm -f
 CP = cp
 MV = mv
 
-PURIFY = @PURIFY@
-
 @SET_MAKE@
 SHELL = @MAKE_SHELL@
 

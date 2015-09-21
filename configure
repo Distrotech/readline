@@ -631,7 +631,6 @@ LOCAL_DEFS
 LOCAL_LDFLAGS
 LOCAL_CFLAGS
 BUILD_DIR
-PURIFY
 SHARED_INSTALL_TARGET
 STATIC_INSTALL_TARGET
 SHARED_TARGET
@@ -722,7 +721,6 @@ ac_subst_files=''
 ac_user_opts='
 enable_option_checking
 with_curses
-with_purify
 enable_multibyte
 enable_shared
 enable_static
@@ -1360,7 +1358,6 @@ Optional Packages:
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-curses           use the curses library instead of the termcap
                           library
-  --with-purify           configure to postprocess with purify
 
 Some influential environment variables:
   CC          C compiler command
@@ -2367,7 +2364,6 @@ case $host_os in *\ *) host_os=`echo "$host_os" | sed 's/ /-/g'`;; esac
 
 
 opt_curses=no
-opt_purify=no
 
 
 # Check whether --with-curses was given.
@@ -2376,20 +2372,8 @@ if test "${with_curses+set}" = set; then :
 fi
 
 
-# Check whether --with-purify was given.
-if test "${with_purify+set}" = set; then :
-  withval=$with_purify; opt_purify=$withval
-fi
-
-
 if test "$opt_curses" = "yes"; then
 	prefer_curses=yes
-fi
-
-if test "$opt_purify" = yes; then
-	PURIFY="purify"
-else
-	PURIFY=
 fi
 
 opt_multibyte=yes
@@ -6606,7 +6590,6 @@ case "$BUILD_DIR" in
 *\ *)	BUILD_DIR=`echo "$BUILD_DIR" | sed 's: :\\\\ :g'` ;;
 *)	;;
 esac
-
 
 
 
