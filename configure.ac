@@ -39,20 +39,12 @@ AC_CANONICAL_BUILD
 
 dnl configure defaults
 opt_curses=no
-opt_purify=no
 
 dnl arguments to configure
 AC_ARG_WITH(curses, AC_HELP_STRING([--with-curses], [use the curses library instead of the termcap library]), opt_curses=$withval)
-AC_ARG_WITH(purify, AC_HELP_STRING([--with-purify], [configure to postprocess with purify]), opt_purify=$withval)
 
 if test "$opt_curses" = "yes"; then
 	prefer_curses=yes
-fi
-
-if test "$opt_purify" = yes; then
-	PURIFY="purify"
-else
-	PURIFY=
 fi
 
 dnl option parsing for optional features
@@ -184,6 +176,7 @@ BASH_STRUCT_WINSIZE
 BASH_STRUCT_DIRENT_D_INO
 BASH_STRUCT_DIRENT_D_FILENO
 
+AC_CHECK_HEADERS(libaudit.h)
 AC_CHECK_DECLS([AUDIT_USER_TTY],,, [[#include <linux/audit.h>]])
 
 dnl yuck
@@ -283,7 +276,6 @@ case "$BUILD_DIR" in
 *)	;;
 esac
 
-AC_SUBST(PURIFY)
 AC_SUBST(BUILD_DIR)
 
 AC_SUBST(CFLAGS)

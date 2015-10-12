@@ -1299,3 +1299,8 @@ configure.ac,config.h.in
 				   ----
 configure.ac
 	- bump library version to 7.0 because of addition of rl_callback_sigcleanup
+
+				   8/26
+				   ----
+configure.ac,Makefile.in,examples/Makefile.in
+	- remove references to purify

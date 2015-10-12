@@ -135,7 +135,7 @@ CSOURCES = $(topdir)/readline.c $(topdir)/funmap.c $(topdir)/keymaps.c \
 	   $(topdir)/shell.c $(topdir)/savestring.c $(topdir)/tilde.c \
 	   $(topdir)/text.c $(topdir)/misc.c $(topdir)/compat.c \
 	   $(topdir)/colors.c $(topdir)/parse-colors.c \
-	   $(topdir)/mbutil.c $(topdir)/xfree.c
+	   $(topdir)/mbutil.c
 
 # The header files for this library.
 HSOURCES = $(topdir)/readline.h $(topdir)/rldefs.h $(topdir)/chardefs.h \

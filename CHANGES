@@ -55,6 +55,29 @@ q.  Fixed a bug that caused readline commands that depend on knowing which
 
 r.  Paren matching now works in vi insert mode.
 
+s.  Colored completion prefixes are now displayed using a different color, less
+    likely to collide with files.
+
+t.  Fixed a bug that caused vi-mode character search to misbehave when
+    running in callback mode.
+
+u.  Fixed a bug that caused output to be delayed when input is coming from a
+    macro in vi-mode.
+
+v.  Fixed a bug that caused the vi-mode `.' command to misbehave when redoing
+    a multi-key key sequence via a macro.
+
+w.  Fixed a bug that caused problems with applications that supply their own
+    input function when performing completion.
+
+x.  When read returns -1/EIO when attempting to read a key, return an error
+    instead of line termination back to the caller.
+
+y.  Updated tty auditing feature based on patch from Red Hat.
+
+z.  Fixed a bug that could cause the history library to crash on overflows
+    introduced by malicious editing of timestamps in the history file.
+
 2.  New Features in Readline
 
 a.  The history truncation code now uses the same error recovery mechansim as
