@@ -1,11 +1,11 @@
 This is history.info, produced by makeinfo version 6.0 from
 history.texi.
 
-This document describes the GNU History library (version 6.4, 28 May
-2015), a programming tool that provides a consistent user interface for
+This document describes the GNU History library (version 7.0, 25 January
+2016), a programming tool that provides a consistent user interface for
 recalling lines of previously typed input.
 
-   Copyright (C) 1988-2014 Free Software Foundation, Inc.
+   Copyright (C) 1988-2016 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -448,7 +448,8 @@ individual list entries.
      'NULL' pointer.
 
  -- Function: time_t history_get_time (HIST_ENTRY *entry)
-     Return the time stamp associated with the history entry ENTRY.
+     Return the time stamp associated with the history entry ENTRY.  If
+     the timestamp is missing or invalid, return 0.
 
  -- Function: int history_total_bytes (void)
      Return the number of bytes that the primary history entries are
@@ -1325,7 +1326,7 @@ Appendix C Function and Variable Index
 * history_subst_char:                    History Variables.    (line 33)
 * history_tokenize:                      History Expansion.    (line 35)
 * history_total_bytes:                   Information About the History List.
-                                                               (line 31)
+                                                               (line 32)
 * history_truncate_file:                 Managing the History File.
                                                                (line 33)
 * history_word_delimiters:               History Variables.    (line 43)
@@ -1356,27 +1357,27 @@ Appendix C Function and Variable Index
 
 
 Tag Table:
-Node: Top844
-Node: Using History Interactively1489
-Node: History Interaction1997
-Node: Event Designators3421
-Node: Word Designators4560
-Node: Modifiers6197
-Node: Programming with GNU History7420
-Node: Introduction to History8164
-Node: History Storage9854
-Node: History Functions10989
-Node: Initializing History and State Management11978
-Node: History List Management12790
-Node: Information About the History List14823
-Node: Moving Around the History List16320
-Node: Searching the History List17413
-Node: Managing the History File19338
-Node: History Expansion21158
-Node: History Variables23068
-Node: History Programming Example26138
-Node: GNU Free Documentation License28815
-Node: Concept Index53987
-Node: Function and Variable Index54692
+Node: Top848
+Node: Using History Interactively1493
+Node: History Interaction2001
+Node: Event Designators3425
+Node: Word Designators4564
+Node: Modifiers6201
+Node: Programming with GNU History7424
+Node: Introduction to History8168
+Node: History Storage9858
+Node: History Functions10993
+Node: Initializing History and State Management11982
+Node: History List Management12794
+Node: Information About the History List14827
+Node: Moving Around the History List16380
+Node: Searching the History List17473
+Node: Managing the History File19398
+Node: History Expansion21218
+Node: History Variables23128
+Node: History Programming Example26198
+Node: GNU Free Documentation License28875
+Node: Concept Index54047
+Node: Function and Variable Index54752
 
 End Tag Table

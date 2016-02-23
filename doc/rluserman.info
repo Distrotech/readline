@@ -1,12 +1,12 @@
-This is rluserman.info, produced by makeinfo version 5.2 from
+This is rluserman.info, produced by makeinfo version 6.0 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 6.4, 28 May 2015), a library which aids in the consistency of
-user interface across discrete programs which provide a command line
+(version 7.0, 25 January 2016), a library which aids in the consistency
+of user interface across discrete programs which provide a command line
 interface.
 
-   Copyright (C) 1988-2014 Free Software Foundation, Inc.
+   Copyright (C) 1988-2016 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -525,9 +525,10 @@ Variable Settings
           commands.  Acceptable 'keymap' names are 'emacs',
           'emacs-standard', 'emacs-meta', 'emacs-ctlx', 'vi', 'vi-move',
           'vi-command', and 'vi-insert'.  'vi' is equivalent to
-          'vi-command'; 'emacs' is equivalent to 'emacs-standard'.  The
-          default value is 'emacs'.  The value of the 'editing-mode'
-          variable also affects the default keymap.
+          'vi-command' ('vi-move' is also a synonym); 'emacs' is
+          equivalent to 'emacs-standard'.  The default value is 'emacs'.
+          The value of the 'editing-mode' variable also affects the
+          default keymap.
 
      'keyseq-timeout'
           Specifies the duration Readline will wait for a character when
@@ -1909,29 +1910,29 @@ their use in free software.
 
 
 Tag Table:
-Node: Top903
-Node: Command Line Editing1425
-Node: Introduction and Notation2079
-Node: Readline Interaction3704
-Node: Readline Bare Essentials4897
-Node: Readline Movement Commands6682
-Node: Readline Killing Commands7644
-Node: Readline Arguments9564
-Node: Searching10610
-Node: Readline Init File12764
-Node: Readline Init File Syntax13919
-Node: Conditional Init Constructs33365
-Node: Sample Init File35892
-Node: Bindable Readline Commands39011
-Node: Commands For Moving40067
-Node: Commands For History40929
-Node: Commands For Text45189
-Node: Commands For Killing48633
-Node: Numeric Arguments50801
-Node: Commands For Completion51942
-Node: Keyboard Macros53912
-Node: Miscellaneous Commands54601
-Node: Readline vi Mode58453
-Node: GNU Free Documentation License59367
+Node: Top907
+Node: Command Line Editing1429
+Node: Introduction and Notation2083
+Node: Readline Interaction3708
+Node: Readline Bare Essentials4901
+Node: Readline Movement Commands6686
+Node: Readline Killing Commands7648
+Node: Readline Arguments9568
+Node: Searching10614
+Node: Readline Init File12768
+Node: Readline Init File Syntax13923
+Node: Conditional Init Constructs33408
+Node: Sample Init File35935
+Node: Bindable Readline Commands39054
+Node: Commands For Moving40110
+Node: Commands For History40972
+Node: Commands For Text45232
+Node: Commands For Killing48676
+Node: Numeric Arguments50844
+Node: Commands For Completion51985
+Node: Keyboard Macros53955
+Node: Miscellaneous Commands54644
+Node: Readline vi Mode58496
+Node: GNU Free Documentation License59410
 
 End Tag Table

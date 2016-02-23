@@ -35,6 +35,17 @@ i.  rl_callback_sigcleanup: a new application function that can clean up and
     unset any state set by readline's callback mode.  Intended to be used
     after a signal.
 
+j.  If an incremental search string has its last character removed with DEL, the
+    resulting empty search string no longer matches the previous line.
+
+k.  If readline reads a history file that begins with `#' (or the value of
+    the history comment character) and has enabled history timestamps, the history
+    entries are assumed to be delimited by timestamps.  This allows multi-line
+    history entries.
+
+l.  Readline now throws an error if it parses a key binding without a terminating
+    `:' or whitespace.
+
 -------------------------------------------------------------------------------
 This is a terse description of the new features added to readline-6.3 since
 the release of readline-6.2.
