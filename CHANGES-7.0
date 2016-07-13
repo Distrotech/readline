@@ -97,6 +97,15 @@ ff. Fixed a bug in the character insertion code that attempts to optimize
     typeahead when it reads a character that is not bound to self-insert and
     resets the key sequence state.
 
+gg.  When refreshing the line as the result of a key sequence, Readline attempts
+     to redraw only the last line of a multiline prompt.
+
+hh.  Fixed an issue that caused completion of git commands to display
+     incorrectly when using colored-completion-prefix.
+
+ii.  Fixed several redisplay bugs having to do with multibyte characters and
+     invisible characters in prompt strings.
+
 2.  New Features in Readline
 
 a.  The history truncation code now uses the same error recovery mechansim as
@@ -141,3 +150,22 @@ k.  If readline reads a history file that begins with `#' (or the value of
 
 l.  Readline now throws an error if it parses a key binding without a terminating
     `:' or whitespace.
+
+m.  The default binding for ^W in vi mode now uses word boundaries specified
+    by Posix (vi-unix-word-rubout is bindable command name).
+
+n.  rl_clear_visible_line: new application-callable function; clears all
+    screen lines occupied by the current visible readline line.
+
+o.  rl_tty_set_echoing: application-callable function that controls whether
+    or not readline thinks it is echoing terminal output.
+
+p.  Handle >| and strings of digits preceding and following redirection
+    specifications as single tokens when tokenizing the line for history
+    expansion.
+
+q.  Fixed a bug with displaying completions when the prefix display length
+    is greater than the length of the completions to be displayed.
+
+r.  The :p history modifier now applies to the entire line, so any expansion
+    specifying :p causes the line to be printed instead of expanded.
