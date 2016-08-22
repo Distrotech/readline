@@ -106,6 +106,9 @@ hh.  Fixed an issue that caused completion of git commands to display
 ii.  Fixed several redisplay bugs having to do with multibyte characters and
      invisible characters in prompt strings.
 
+jj. Fixed a bug that caused mode strings to be displayed incorrectly if the prompt was
+    shorter than the mode string.
+
 2.  New Features in Readline
 
 a.  The history truncation code now uses the same error recovery mechansim as
@@ -170,6 +173,13 @@ q.  Fixed a bug with displaying completions when the prefix display length
 r.  The :p history modifier now applies to the entire line, so any expansion
     specifying :p causes the line to be printed instead of expanded.
 
+s.  New application-callable function: rl_pending_signal(): returns the signal
+    number of any signal readline has caught but not yet handled.
+    
+t.  New application-settable variable: rl_persistent_signal_handlers: if set to a
+    non-zero value, readline will enable the readline-6.2 signal handler behavior   
+    in callback mode: handlers are installed when rl_callback_handler_install is
+    called and removed removed when a complete line has been read.
 
 -------------------------------------------------------------------------------
 This document details the changes between this version, readline-6.3, and the
